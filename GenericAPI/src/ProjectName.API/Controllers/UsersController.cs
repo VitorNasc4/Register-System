@@ -53,13 +53,13 @@ namespace ProjectName.API.Controllers
         // api/users
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Post([FromBody] CreateUserCommand command)
+        public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
         {
-            var id = _mediator.Send(command);
+            var id = await _mediator.Send(command);
 
-            if (id is null)
+            if (id == null)
             {
-                return BadRequest("Email já caastrado.");
+                return BadRequest("Email já cadastrado.");
             }
 
             return CreatedAtAction(nameof(GetById), new { id = id }, command);

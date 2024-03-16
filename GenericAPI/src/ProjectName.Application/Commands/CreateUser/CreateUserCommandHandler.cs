@@ -28,7 +28,7 @@ namespace ProjectName.Application.Commands.UserCommands.CreateUser
             var passwordHash = _authService.ComputeSha256Hash(request.Password);
             var user = CreateUserCommand.ToEntity(request, passwordHash);
 
-            var userExist = _userRepository.UserExistAsync(user.Email);
+            var userExist = await _userRepository.UserExistAsync(user.Email);
             if (userExist)
             {
                 return null;

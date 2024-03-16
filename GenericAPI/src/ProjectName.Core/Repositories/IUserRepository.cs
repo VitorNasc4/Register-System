@@ -10,7 +10,7 @@ namespace ProjectName.Core.Repositories
     {
         Task<User> GetUserByIdAsync(int id);
         Task<List<User>> GetAllUsersAsync(string query);
-        bool UserExistAsync(string email);
+        Task<bool> UserExistAsync(string email);
         Task<User> GetUserByEmailAndPasswordAsyn(string email, string passwordHash);
         Task AddAsync(User user);
         Task SaveChangesAsync();

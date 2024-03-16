@@ -15,7 +15,7 @@ namespace ProjectName.Test.Application.Queries
         [Fact]
         public async void UsersExist_Executes_ReturnUserViewModels()
         {
-            var user = UserMocks.GetValidClientUser();
+            var user = UserMocks.GetValidUser();
             var id = 1;
 
             var userRepositoryMock = new Mock<IUserRepository>();

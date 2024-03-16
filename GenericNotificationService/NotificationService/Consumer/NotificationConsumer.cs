@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Connections;
 using NotificationService.DTOs;
-using NotificationService.Infraestructure.Repositories;
 using NotificationService.Infraestructure.Services;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -24,12 +23,6 @@ namespace NotificationService.Consumer
         {
             _serviceProvider = serviceProvider;
 
-            // var factory = new ConnectionFactory
-            // {
-            //     HostName = "rabbitmq",
-            //     UserName = "guest",
-            //     Password = "guest"
-            // };
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",

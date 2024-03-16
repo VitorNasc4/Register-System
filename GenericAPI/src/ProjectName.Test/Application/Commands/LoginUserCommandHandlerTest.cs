@@ -18,7 +18,7 @@ namespace ProjectName.Test.Application.Commands
         [Fact]
         public async Task InputDataIsOk_Executed_ReturnLoginUserViewModel()
         {
-            var user = UserMocks.GetValidClientUser();
+            var user = UserMocks.GetValidUser();
             var loginUserCommand = new LoginUserCommand
             {
                 Email = user.Email,
@@ -54,7 +54,7 @@ namespace ProjectName.Test.Application.Commands
         [Fact]
         public async Task InputDataIsNotOk_Executed_ReturnNull()
         {
-            var user = UserMocks.GetValidClientUser();
+            var user = UserMocks.GetValidUser();
             var loginUserCommand = new LoginUserCommand
             {
                 Email = user.Email,

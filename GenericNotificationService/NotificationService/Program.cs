@@ -1,9 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NotificationService.Consumer;
-using NotificationService.Infraestructure.Repositories;
 using NotificationService.Infraestructure.Services;
-using NotificationService.Infrastructure.Repositories;
 using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -19,6 +19,7 @@ namespace ProjectName.Test.Application.Commands
         {
             var userRepositoryMock = new Mock<IUserRepository>();
             var authServiceMock = new Mock<IAuthService>();
+            var notificationService = new Mock<INotificationService>();
 
             var createUserCommand = new CreateUserCommand
             {
@@ -29,7 +30,7 @@ namespace ProjectName.Test.Application.Commands
                 Role = "client"
             };
 
-            var sut = new CreateUserCommandHandler(userRepositoryMock.Object, authServiceMock.Object);
+            var sut = new CreateUserCommandHandler(userRepositoryMock.Object, authServiceMock.Object, notificationService.Object);
             var id = await sut.Handle(createUserCommand, new CancellationToken());
 
             Assert.True(id >= 0);

@@ -19,7 +19,7 @@ namespace ProjectName.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(User user)
         {
-            _dbContext.Users.Add(user);
+            await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
         }
@@ -30,10 +30,10 @@ namespace ProjectName.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
         }
 
-        public bool UserExistAsync(string email)
+        public async Task<bool> UserExistAsync(string email)
         {
-            return _dbContext.Users
-                .Any(u => u.Email == email);
+            return await _dbContext.Users
+                .AnyAsync(u => u.Email == email);
         }
 
         public async Task<User> GetUserByIdAsync(int id)
