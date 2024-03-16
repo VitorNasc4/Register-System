@@ -67,7 +67,7 @@ namespace NotificationService.Consumer
             var template = new EmailTemplateDto
             {
                 Subject = "Welcome, {0}!",
-                Content = "Welcome to AwesomeShop, {0}! You can search our products in awesome-shop-dot-com,",
+                Content = "Welcome to my Application, {0}! Now, you can autenticate with your email and password!",
                 Event = "CustomerCreated"
             };
 
