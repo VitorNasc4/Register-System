@@ -19,14 +19,21 @@ namespace ProjectName.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(User user)
         {
-            await _dbContext.Users.AddAsync(user);
+            _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
+
         }
 
-        public Task<User> GetUserByEmailAndPasswordAsyn(string email, string passwordHash)
+        public async Task<User> GetUserByEmailAndPasswordAsyn(string email, string passwordHash)
+        {
+            return await _dbContext.Users
+                .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+        }
+
+        public bool UserExistAsync(string email)
         {
             return _dbContext.Users
-                .SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+                .Any(u => u.Email == email);
         }
 
         public async Task<User> GetUserByIdAsync(int id)
@@ -40,6 +47,11 @@ namespace ProjectName.Infrastructure.Persistence.Repositories
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<User>> GetAllUsersAsync(string query)
+        {
+            return await _dbContext.Users.ToListAsync();
         }
     }
 }

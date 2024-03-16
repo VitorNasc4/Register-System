@@ -52,7 +52,6 @@ namespace NotificationService.Consumer
 
             consumer.Received += async (sender, eventArgs) =>
             {
-                Console.WriteLine("CHEGOOUUU");
                 var byteArray = eventArgs.Body.ToArray();
                 var notificationInfoJson = Encoding.UTF8.GetString(byteArray);
                 var notificationInfoDTO = JsonSerializer.Deserialize<NotificationInfoDTO>(notificationInfoJson);
@@ -72,25 +71,24 @@ namespace NotificationService.Consumer
         }
         private async Task SendEmail(NotificationInfoDTO notificationInfoDTO)
         {
-            using (var scope = _serviceProvider.CreateScope())
+            var template = new EmailTemplateDto
             {
-                var emailService = scope.ServiceProvider.GetService<INotificationService>();
-                // var mailRepository = scope.ServiceProvider.GetService<IMailRepository>();
+                Subject = "Welcome, {0}!",
+                Content = "Welcome to AwesomeShop, {0}! You can search our products in awesome-shop-dot-com,",
+                Event = "CustomerCreated"
+            };
 
-                // var template = await mailRepository!.GetTemplate("CustomerCreated");
-                var template = new EmailTemplateDto
-                {
-                    Subject = "Welcome, {0}!",
-                    Content = "Welcome to AwesomeShop, {0}! You can search our products in awesome-shop-dot-com,",
-                    Event = "CustomerCreated"
-                };
+            var subject = string.Format(template.Subject!, notificationInfoDTO.FullName);
+            var content = string.Format(template.Content!, notificationInfoDTO.FullName);
 
-                var subject = string.Format(template.Subject!, notificationInfoDTO.FullName);
-                var content = string.Format(template.Content!, notificationInfoDTO.FullName);
+            var outlook = new Email("smtp.office365.com", "SeuEmailOutlook", "SuaSenhaDoEmail");
+            outlook.SendEmail(
+                emailTo: notificationInfoDTO.Email,
+                subject: subject,
+                body: content
+            );
 
-                await emailService!.SendAsync(subject, content, notificationInfoDTO.Email, notificationInfoDTO.FullName);
-            }
-
+            await Task.CompletedTask;
             Console.WriteLine("Email enviado com sucesso");
         }
     }

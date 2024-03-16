@@ -9,7 +9,10 @@ namespace ProjectName.Core.Repositories
     public interface IUserRepository
     {
         Task<User> GetUserByIdAsync(int id);
+        Task<List<User>> GetAllUsersAsync(string query);
+        bool UserExistAsync(string email);
         Task<User> GetUserByEmailAndPasswordAsyn(string email, string passwordHash);
         Task AddAsync(User user);
+        Task SaveChangesAsync();
     }
 }

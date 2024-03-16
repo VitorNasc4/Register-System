@@ -7,7 +7,7 @@ using ProjectName.Core.Entities;
 
 namespace ProjectName.Application.Commands.UserCommands.CreateUser
 {
-    public class CreateUserCommand : IRequest<int>
+    public class CreateUserCommand : IRequest<int?>
     {
         public string FullName { get; set; }
         public string Password { get; set; }

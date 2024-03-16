@@ -23,17 +23,10 @@ using ProjectName.Infrastructure.NotificationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// var connectionString = builder.Configuration.GetConnectionString("ProjectNameCs");
-// Adicionando a configuração do DbContext com SQL Server
-// builder.Services.AddDbContext<ProjectNameDbContext>(options => options.UseSqlServer(connectionString));
-
-// Para usar o banco de dados em memória (caso necessário), descomente a linha abaixo e comente a de cima
-//builder.Services.AddDbContext<ProjectNameDbContext>(options => options.UseInMemoryDatabase("ProjectName"));
-
 // Para usar o Postgres
 var connectionString = builder.Configuration.GetConnectionString("ProjectNameCsPostgres");
 builder.Services.AddDbContext<ProjectNameDbContext>
-    (option => option.UseNpgsql(connectionString));
+    (option => option.UseNpgsql(connectionString), ServiceLifetime.Scoped);
 
 // Injeções de dependências
 builder.Services.AddMediatR(typeof(CreateUserCommand));

@@ -11,7 +11,7 @@ using MediatR;
 
 namespace ProjectName.Application.Commands.UserCommands.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int?>
     {
         private readonly IUserRepository _userRepository;
         private readonly IAuthService _authService;
@@ -23,11 +23,16 @@ namespace ProjectName.Application.Commands.UserCommands.CreateUser
             _authService = authService;
             _notificationService = notificationService;
         }
-        public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<int?> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var passwordHash = _authService.ComputeSha256Hash(request.Password);
             var user = CreateUserCommand.ToEntity(request, passwordHash);
 
+            var userExist = _userRepository.UserExistAsync(user.Email);
+            if (userExist)
+            {
+                return null;
+            }
             await _userRepository.AddAsync(user);
 
             var notificationInfoDTO = User.ToDTO(user);

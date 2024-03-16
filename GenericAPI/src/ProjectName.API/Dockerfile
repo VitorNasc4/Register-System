@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
-# Alterar a variável de ambiente para a nova porta
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000
 

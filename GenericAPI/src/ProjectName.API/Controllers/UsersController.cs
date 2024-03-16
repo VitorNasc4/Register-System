@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Buffers.Text;
 
 namespace ProjectName.API.Controllers
 {
@@ -20,6 +21,20 @@ namespace ProjectName.API.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> GetAllUsers(string query)
+        {
+            var getAllUsersQuery = new GetAllUsersQuery(query);
+            var user = await _mediator.Send(getAllUsersQuery);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
         // api/users/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -41,6 +56,11 @@ namespace ProjectName.API.Controllers
         public IActionResult Post([FromBody] CreateUserCommand command)
         {
             var id = _mediator.Send(command);
+
+            if (id is null)
+            {
+                return BadRequest("Email já caastrado.");
+            }
 
             return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }

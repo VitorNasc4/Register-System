@@ -23,7 +23,6 @@ namespace ProjectName.Infrastructure.NotificationService
             var notificationInfoBytes = Encoding.UTF8.GetBytes(notificationInfoJson);
 
             _messageBusService.Publish(QUEUE_NAME, notificationInfoBytes);
-            Console.WriteLine("ENVIADOOO");
         }
     }
 }
