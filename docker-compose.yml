@@ -35,22 +35,6 @@ services:
       retries: 5
       start_period: 80s
 
-  api:
-    build:
-      context: ./GenericAPI
-      dockerfile: ./src/ProjectName.API/Dockerfile
-    image: api:dev
-    container_name: ProjectName-api
-    depends_on:
-      db:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-    ports:
-      - "5000:5000"
-
 volumes:
   db:
   mongo-data:
