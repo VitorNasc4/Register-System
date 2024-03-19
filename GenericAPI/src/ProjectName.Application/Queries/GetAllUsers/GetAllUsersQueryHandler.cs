@@ -1,14 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectName.Application.ViewModels;
 using ProjectName.Core.Repositories;
-using ProjectName.Infrastructure.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Google.Protobuf.WellKnownTypes;
 
 namespace ProjectName.Application.Queries.GetUser
 {

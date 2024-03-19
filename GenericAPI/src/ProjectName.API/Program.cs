@@ -20,6 +20,7 @@ using Microsoft.OpenApi.Models;
 using ProjectName.Application.Commands.UserCommands.CreateUser;
 using ProjectName.Infrastructure.MessageBus;
 using ProjectName.Infrastructure.NotificationService;
+using ProjectName.Infrastructure.CacheService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,14 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ProjectNameCsPostgres");
 builder.Services.AddDbContext<ProjectNameDbContext>
     (option => option.UseNpgsql(connectionString), ServiceLifetime.Scoped);
+
+// Para usar o Redis
+builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddStackExchangeRedisCache(o =>
+{
+    o.InstanceName = "genericApi";
+    o.Configuration = "localhost:6379";
+});
 
 // Injeções de dependências
 builder.Services.AddMediatR(typeof(CreateUserCommand));
@@ -37,7 +46,6 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 
 // Ajustando HttpClient
 builder.Services.AddHttpClient();
-
 
 builder.Services.AddControllers(options => options.Filters.Add(typeof(ValidationFilters)));
 

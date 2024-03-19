@@ -21,13 +21,13 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: DevFreela-rabbitmq
+    container_name: rabbitmq
     restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - DevFreela-rabbitmq:/var/lib/rabbitmq
+      - rabbitmq:/var/lib/rabbitmq
     healthcheck:
       test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
       interval: 30s
@@ -35,7 +35,28 @@ services:
       retries: 5
       start_period: 80s
 
+  redis:
+    image: redis
+    container_name: redis
+    environment:
+      - REDIS_PASSWORD=teste
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "redis-cli",
+          "-h",
+          "localhost",
+          "-a",
+          "teste",
+          "ping"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   db:
-  mongo-data:
-  DevFreela-rabbitmq:
+  rabbitmq:
