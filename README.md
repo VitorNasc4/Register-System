@@ -1,12 +1,13 @@
 # Register-System
 
-API for a user registration and authentication system. Allows registration, authentication, and updating of user data. It is integrated with a notification system that sends a welcome email to new users.
+API for a user registration and authentication system. Allows registration, authentication, and updating of user data using cache to improve the performance. It is integrated with a notification system that sends a welcome email to new users.
 
 
 ## 🛠 Tecnologies used
 
 * Dotnet 8.0
 * Postgres
+* Redis
 * RabbitMQ
 * Dokcer
 
